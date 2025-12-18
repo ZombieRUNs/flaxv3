@@ -1,0 +1,54 @@
+training:
+  env_name: Boxing
+  num_envs: 1
+  seed: 1
+  device: 1
+  total_steps: 102000
+  train_ratio: 1024
+  batch_size: 16
+  batch_length: 64
+  imagine_length: 15
+  prioritized: True
+  use_datasets: False
+
+eval:
+  device: 1
+  episodes: 100
+  num_envs: 1
+  env_name: Boxing
+  ckpt_path: /home/zxh/ws/wrqws/flaxv3/outputs/2025-02-21/10-20-47/Boxing/ckpt/100000
+
+dreamerv3:
+  encoder:
+    image_shape: [64,64,3]
+    depths: 32
+    mults: [1,2,4,8]
+    act: silu
+    norm: BatchNorm
+  
+  rssm:
+    hidden: 512
+    layers: 1
+    deter: 512
+    group: 8
+    stoch: 32
+    classes: 32
+    act: silu
+    norm: LayerNorm
+
+  decoder:
+    channels: 3
+    depths: 32
+    mults: [1,2,4,8]
+    act: silu
+    norm: BatchNorm
+
+agent:
+  feat_dim: 1536
+  hidden_dim: 512 
+  layers: 2 
+  gamma: 0.997
+  lmbda: 0.95
+  entropy_coef: 0.0003
+  act: silu
+  norm: LayerNorm
